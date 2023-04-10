@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Sistema de Reserva de turno </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/postOdontologo.js"></script>
+  <script type="text/javascript" src="/js/postPacientes.js"></script>
+</head>
+<body style="background-image: url('/img/pexels-cedric-fauntleroy-4269690.jpg'); background-repeat: no-repeat; background-size: cover; ">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+  <a class="navbar-brand" href="/index.html">Sistema de Reserva de turno</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Gestiones
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/altaOdontologo.html">Alta odontologo</a>
+          <a class="dropdown-item" href="/listarOdontologo.html">Listar odontologo</a>
+          <a class="dropdown-item" href="/altaPacientes.html">Alta Paciente</a>
+          <a class="dropdown-item" href="/listarPacientes.html">Listar Pacientes</a>
+          <a class="dropdown-item" href="/altasTurnos.html">Alta Turnos</a>
+          <a class="dropdown-item" href="/listarTurnos.html">Listar Turnos</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <button  class="btn btn-success text-center mx-auto" id="deslogeo " style="background-color: transparent;font-size: 17px;height: 60px; color: black; font-weight: bold; border-radius: 15px; border: 2px solid black;"><a class="nav-link" href="/logout">Salir</a></button>
+</nav>
+</body>
+</html>
