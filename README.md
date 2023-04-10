@@ -21,4 +21,4 @@ JPA es una especificación de Java que estandariza el mapeo objeto-relacional y 
 
 Tecnologías Utilizadas:
 
-En resumen, el proyecto es un sistema de registro de turnos que utiliza Java con el framework Spring Boot y las tecnologías H2, Maven, API Postman, Thymeleaf, JUnit, Hibernate, JPA y ORM para su desarrollo. El patrón de arquitectura MVC se utiliza para separar las preocupaciones en capas y mejorar la mantenibilidad del código.
+En resumen, el proyecto es un sistema de registro de turnos que utiliza Java con el framework Spring Boot y las tecnologías H2, Maven, API Postman, Thymeleaf, Bootstrap, JUnit, Hibernate, JPA y ORM para su desarrollo. El patrón de arquitectura MVC se utiliza para separar las preocupaciones en capas y mejorar la mantenibilidad del código.
