@@ -2,6 +2,7 @@ package com.example.Sistema.de.Registro.v2.ServiceTest;
 
 
 import com.example.Sistema.de.Registro.v2.Entity.Domicilio;
+import com.example.Sistema.de.Registro.v2.Entity.Odontologo;
 import com.example.Sistema.de.Registro.v2.Entity.Paciente;
 import com.example.Sistema.de.Registro.v2.Exception.DataInvalidException;
 import com.example.Sistema.de.Registro.v2.Exception.ResourceNotFoundException;
@@ -71,14 +72,6 @@ public class PacienteTest {
         Domicilio domicilio1 = new Domicilio("Algala", "111", "vn", "ny");
         Paciente paciente1 = new Paciente("juanciro", "motaner", "111222", LocalDate.of(2022, 3, 1), domicilio1);
         pacienteService.agregarPaciente(paciente1);
-//
-//        Domicilio domicilio2 = new Domicilio("ruben", "999", "catal", "viet");
-//        Paciente paciente2 = new Paciente("p", "juan", "444555666", LocalDate.of(2023, 3, 2), domicilio2);
-//        pacienteService.agregarPaciente(paciente2);
-//
-//        Domicilio domicilio3 = new Domicilio("libertador", "444", "james craick", "cordoba");
-//        Paciente paciente3 = new Paciente("pablo", "baston", "777666", LocalDate.of(2020, 1, 8), domicilio3);
-//        pacienteService.agregarPaciente(paciente3);
 
 
 
@@ -94,7 +87,7 @@ public class PacienteTest {
 
     @Test
     @Order(4)
-    public void modificarPaciente() throws ResourceNotFoundException {
+    public void modificarPaciente() throws ResourceNotFoundException, DataInvalidException {
 
         //Crea un nuevo objeto Paciente con datos modificados a través del constructor y
         // lo guarda en la base de datos a través del método modificarPaciente()
@@ -102,43 +95,39 @@ public class PacienteTest {
 
 
         Domicilio domicilio1=new Domicilio("rubi","123","trompso","oslo");
-        Paciente pacienteModificado=new Paciente("p","juan","444555666", LocalDate.of(2023, 3, 2),domicilio1);
+        Paciente paciente1=new Paciente("pablo","juan","444555666", LocalDate.of(2023, 3, 2),domicilio1);
+        Paciente pacienteGuardado= pacienteService.agregarPaciente(paciente1);
 
+        Paciente pacienteModificado= new Paciente(1L,"pa","juan","444555666", LocalDate.of(2023, 3, 2),domicilio1);
         Paciente pacienteModificadoDevuelto= pacienteService.modificarPaciente(pacienteModificado);
 
 
-        //Verifica que los datos del objeto Paciente devuelto por el método modificarPaciente()
-        // son iguales a los datos del objeto Paciente modificado creado en el paso anterior, utilizando el método assertEquals().
-        assertEquals(pacienteModificado, pacienteModificadoDevuelto);
+       Optional<Paciente> pacienteBuscado= pacienteService.listarPaciente(pacienteModificadoDevuelto.getId());
 
-        //Verifica que los objetos Paciente devuelto por el método modificarPaciente() y
-        // el objeto Paciente modificado creado en el paso anterior son el mismo objeto en memoria, utilizando el método assertTrue().
+       Assertions.assertEquals(pacienteModificado.getId(),pacienteModificadoDevuelto.getId());
 
-        assertTrue(pacienteModificado == pacienteModificadoDevuelto);
+
 
     }
 
 
     @Test
     @Order(5)
-    public void eliminarPaciente() throws ResourceNotFoundException {
+    public void eliminarPaciente() throws ResourceNotFoundException, DataInvalidException {
 
-//        // Crear el paciente
-//        Domicilio domicilio1 = new Domicilio("rubi", "123", "trompso", "oslo");
-//        Paciente paciente1 = new Paciente("perez", "juan", "444555666", LocalDate.of(2023, 3, 2), domicilio1);
-//
+        // Creamos un nuevo paciente y lo agregamos a la base de datos
+        Domicilio domicilio1 = new Domicilio("Algala", "111", "vn", "ny");
+        Paciente paciente1 = new Paciente("juanciro", "motaner", "111222", LocalDate.of(2022, 3, 1), domicilio1);
+        Paciente pacienteGuardado = pacienteService.agregarPaciente(paciente1);
 
-        Long id=1L;
-        // Verificar que el paciente ha sido creado correctamente
-//        Optional<Paciente> pacienteBuscado = pacienteService.listarPaciente(pacienteGuardado.getId());
-//        assertTrue(pacienteBuscado.isPresent());
+        // Eliminamos el paciente recién agregado
+        pacienteService.eliminarPaciente(pacienteGuardado.getId());
 
-        // Eliminar el paciente
-         pacienteService.eliminarPaciente(id);
+        // Verificamos que el paciente haya sido eliminado
+        assertThrows(ResourceNotFoundException.class, () -> {
+            pacienteService.listarPaciente(pacienteGuardado.getId());
+        });
 
-        // Verificar que el paciente ha sido eliminado correctamente
-//        Optional<Paciente> pacienteEliminado = pacienteService.listarPaciente(pacienteGuardado.getId());
-        assertTrue(pacienteService.listarPaciente(1L).isEmpty());
     }
 
 

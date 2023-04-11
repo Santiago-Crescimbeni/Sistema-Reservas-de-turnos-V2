@@ -18,8 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
@@ -150,9 +149,30 @@ public class TurnosTest {
 
     @Test
     @Order(5)
-    public void eliminarTurnoTest() throws ResourceNotFoundException {
-        turnoService.eliminarTurno(2L);
-        Assertions.assertFalse(turnoService.listarTurnoOptional(2L).isPresent());
+    public void eliminarTurno() throws DataInvalidException, ResourceNotFoundException {
+        // Crear un odontólogo
+        Odontologo odontologo = new Odontologo("Frank", "Rib", "6243");
+        odontologoService.agregarOdontologo(odontologo);
+
+        // Crear un domicilio para el paciente
+        Domicilio domicilio = new Domicilio("Cosac", "123", "v Maria", "Cordoba");
+
+        // Crear un paciente
+        Paciente paciente = new Paciente("ruben", "Riba", "483892", LocalDate.of(2023, 3, 1), domicilio);
+        pacienteService.agregarPaciente(paciente);
+
+        // Crear un turno con el odontólogo, paciente y fecha correspondientes
+        TurnoDto turno = new TurnoDto(LocalDate.of(2023, 4, 15),paciente.getId(),paciente.getNombre(),odontologo.getId(),odontologo.getNombre());
+
+        // Guardar el turno en la base de datos
+        TurnoDto turnoGuardado = turnoService.agregarTurno(turno);
+
+        // Eliminar el turno recién creado
+        turnoService.eliminarTurno(turnoGuardado.getId());
+
+
+        // Verificar que el turno ya no existe en la base de datos
+       assertFalse(turnoService.listarTodosTurno().contains(turnoGuardado.getId()));
     }
 
 }

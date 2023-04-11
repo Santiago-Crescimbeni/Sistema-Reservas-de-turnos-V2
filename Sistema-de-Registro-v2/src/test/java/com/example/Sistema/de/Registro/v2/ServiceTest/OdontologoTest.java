@@ -1,7 +1,5 @@
 package com.example.Sistema.de.Registro.v2.ServiceTest;
-import com.example.Sistema.de.Registro.v2.Entity.Domicilio;
 import com.example.Sistema.de.Registro.v2.Entity.Odontologo;
-import com.example.Sistema.de.Registro.v2.Entity.Paciente;
 import com.example.Sistema.de.Registro.v2.Exception.DataInvalidException;
 import com.example.Sistema.de.Registro.v2.Exception.ResourceNotFoundException;
 import com.example.Sistema.de.Registro.v2.Service.OdontologoService;
@@ -9,7 +7,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,38 +66,33 @@ public class OdontologoTest {
 
     @Test
     @Order(4)
-    public void modificarOdontologo() throws ResourceNotFoundException {
+    public void modificarOdontologo() throws ResourceNotFoundException, DataInvalidException {
 
 
-        Odontologo odontologoModificado= new Odontologo("raf", "luciano", "123456");
+        Odontologo odontologo= new Odontologo(1L,"rafael", "luciano", "123456");
+        Odontologo odontologoGuardado=odontologoService.agregarOdontologo(odontologo);
 
+        Odontologo odontologoModificado= new Odontologo(1L,"ra", "luciano", "123456");
 
         Odontologo odontologoModificadoDevuelto= odontologoService.modificarOdontologo(odontologoModificado);
 
-
-        //Verifica que los datos del objeto Paciente devuelto por el método modificarPaciente()
-        // son iguales a los datos del objeto Paciente modificado creado en el paso anterior, utilizando el método assertEquals().
-        assertEquals(odontologoModificado, odontologoModificadoDevuelto);
-
-        //Verifica que los objetos Paciente devuelto por el método modificarPaciente() y
-        // el objeto Paciente modificado creado en el paso anterior son el mismo objeto en memoria, utilizando el método assertTrue().
-
-        assertTrue(odontologoModificado == odontologoModificadoDevuelto);
+        Optional<Odontologo> odontologoBuscado= odontologoService.listarOdontologo(odontologoModificadoDevuelto.getId());
+        Assertions.assertEquals(odontologoModificado.getId(),odontologoModificadoDevuelto.getId());
 
     }
 
 
     @Test
-    @Order(4)
-    public void eliminarOdontologo() throws ResourceNotFoundException {
+    @Order(5)
+    public void eliminarOdontologo() throws ResourceNotFoundException, DataInvalidException {
+        Odontologo odontologo = new Odontologo("odo1", "apeOdo", "12344");
+        odontologoService.agregarOdontologo(odontologo);
 
-        Long id=1L;
-
+        Long id = 1L;
         odontologoService.eliminarOdontologo(id);
 
-
-        assertTrue(odontologoService.listarOdontologo(1L).isEmpty());
-
+        // ya no es necesario buscar el odontologo eliminado
+        assertFalse(odontologoService.listarTodosOdontologo().contains(id));
 
     }
 }

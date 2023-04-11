@@ -97,9 +97,9 @@ public class TurnoService {
 
         Optional<TurnoDto> tuernoAEliminar= listarTurnoOptional(id);
         if(tuernoAEliminar.isPresent()){
-            throw new ResourceNotFoundException("Error. No se puede eliminar el turno, no existe en el registro");
-        }else {
             turnoRepository.deleteById(id);
+        }else {
+            throw new ResourceNotFoundException("Error. No se puede eliminar el turno, no existe en el registro");
         }
 
     }
